@@ -1,51 +1,56 @@
 package todo
 
-import(
+import (
 	"net/http"
-	"github.com/go-chi/go-chi"
+
+	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
 )
 
 type Todo struct {
-	Slug string `json: "slug"`
-	Title string `json: "title"`
-	Body string `json: "body"`
+	Slug  string `json:"slug"`
+	Title string `json:"title"`
+	Body  string `json:"body"`
 }
 
 func Routes() *chi.Mux {
-	router := chi.Newrouter()
-	router.Get("/{todoId}", GetATodo)
-	router.Delete("/{todoId}", DeleteTodo)
+	router := chi.NewRouter()
+	router.Get("/{todoID}", GetATodo)
+	router.Delete("/{todoID}", DeleteTodo)
 	router.Post("/", CreateTodo)
 	router.Get("/", GetAllTodos)
 	return router
 }
 
-
 func GetATodo(w http.ResponseWriter, r *http.Request) {
 	todoID := chi.URLParam(r, "todoID")
 	todos := Todo{
-		Slug: todoID,
+		Slug:  todoID,
 		Title: "Hello world",
-		Body: "Heloo world from planet earth",
+		Body:  "Heloo world from planet earth",
 	}
-	render.JSON(w,r,todos)
+	render.JSON(w, r, todos) // A chi router helper for serializing and returning json
 }
 
-func DeleteTodo(w http.ResponseWriter, r *http.Request){
+func DeleteTodo(w http.ResponseWriter, r *http.Request) {
 	response := make(map[string]string)
-	response["message"] = "Deleted TODO success"
-	response.JSON(w,r, response)
+	response["message"] = "Deleted TODO successfully"
+	render.JSON(w, r, response) // Return some demo response
 }
 
-func CreateTodo( w http.ResponseWriter, r *http.Request){
+func CreateTodo(w http.ResponseWriter, r *http.Request) {
+	response := make(map[string]string)
+	response["message"] = "Created TODO successfully"
+	render.JSON(w, r, response) // Return some demo response
+}
+
+func GetAllTodos(w http.ResponseWriter, r *http.Request) {
 	todos := []Todo{
 		{
-			Slug: "slug",
-			Title: "Hello World",
-			Body: "Hello world from planet earth"
+			Slug:  "slug",
+			Title: "Hello world",
+			Body:  "Heloo world from planet earth",
 		},
 	}
-	render.JSON(w,r,todos)
+	render.JSON(w, r, todos) // A chi router helper for serializing and returning json
 }
-
