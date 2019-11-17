@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
-	"github.com/tonyalaribe/todoapi/basestructure/features/todo"
+	"https://github.com/Sneh1999/Chi-Go/todo"
 )
 
 func Routes() *chi.Mux{
